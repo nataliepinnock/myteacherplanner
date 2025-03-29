@@ -1,6 +1,6 @@
 import { desc, and, eq, isNull } from 'drizzle-orm';
 import { db } from './drizzle';
-import { activityLogs, teamMembers, teams, users } from './schema';
+import { activityLogs, teamMembers, teams, users, groups } from './schema';
 import { cookies } from 'next/headers';
 import { verifyToken } from '@/lib/auth/session';
 
@@ -126,4 +126,19 @@ export async function getTeamForUser(userId: number) {
   });
 
   return result?.teamMembers[0]?.team || null;
+}
+
+// get groups of a user from the groups table, include the group name 
+export async function getGroupsForUser(userId: number) {
+  const result = await db
+    .select({
+      id: groups.id,
+      name: groups.name,
+      userId: groups.userId,
+      createdAt: groups.createdAt,
+    })
+    .from(groups)
+    .where(eq(groups.userId, userId));
+
+  return result;
 }
