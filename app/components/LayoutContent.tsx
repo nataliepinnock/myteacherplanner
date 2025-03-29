@@ -3,7 +3,7 @@
 import Link from 'next/link';
 import { use, useState, Suspense } from 'react';
 import { Button } from '@/components/ui/button';
-import { CircleIcon, Home, LogOut, Users, Settings, Shield, Activity } from 'lucide-react';
+import { CircleIcon, Home, LogOut, Users, Settings } from 'lucide-react';
 import {
   DropdownMenu,
   DropdownMenuContent,

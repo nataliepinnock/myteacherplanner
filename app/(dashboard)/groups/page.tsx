@@ -1,5 +1,8 @@
 import { redirect } from 'next/navigation';
 import { getTeamForUser, getUser, getGroupsForUser } from '@/lib/db/queries';
+import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
+import { Button } from '@/components/ui/button';
+
 
 export default async function SettingsPage() {
   const user = await getUser();
@@ -17,20 +20,24 @@ export default async function SettingsPage() {
 
   return (
     <div>
-      <h1>Dashboard</h1>
-      <p>Groups: {groups.length}</p>
-      <p>Team: {teamData.name}</p>
-      <p>Team Members: {teamData.teamMembers.length}</p>
-      <p>User: {user.name}</p>
-      <p>User Email: {user.email}</p>
-      <p>User Role: {user.role}</p>
-      <p>User ID: {user.id}</p>
-      <p>Team ID: {teamData.id}</p>
-      <p>Team Members: {teamData.teamMembers.length}</p>
-      <p>Groups: {groups.length}</p>
-      <p>Groups: {groups.map((group) => group.name)}</p>
-      <p>Groups: {groups.map((group) => group.id)}</p>
-      
+     <div className="flex justify-end mb-4">
+        <Button>Create Group</Button>
+     </div>
+   
+      <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-4">
+        {groups.map((group) => (
+          <Card key={group.id}>
+            <CardHeader>
+              <CardTitle>{group.name}</CardTitle>
+            </CardHeader>
+            <CardContent>
+              <p className="text-sm text-gray-500">
+                Created {new Date(group.createdAt).toLocaleDateString()}
+              </p>
+            </CardContent>
+          </Card>
+        ))}
+      </div>
     </div>
   )
 }
